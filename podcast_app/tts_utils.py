@@ -4,8 +4,8 @@ from pydub import AudioSegment
 from uuid import uuid4
 import edge_tts
 
-HOST_VOICE = "en-US-AriaNeural"
-GUEST_VOICE = "en-US-GuyNeural"
+HOST_VOICE = "en-US-AndrewNeural"
+GUEST_VOICE = "en-US-AvaNeural"
 
 async def synthesize_text(text, voice, filename):
     communicate = edge_tts.Communicate(text=text, voice=voice)
@@ -23,7 +23,7 @@ async def generate_podcast(script, output_path="podcast.mp3", bg_music_path=None
     podcast = AudioSegment.empty()
     for file in segment_files:
         audio = AudioSegment.from_mp3(file)
-        podcast += audio + AudioSegment.silent(duration=500)
+        podcast += audio + AudioSegment.silent(duration=75)
 
     if bg_music_path:
         background = AudioSegment.from_mp3(bg_music_path)
@@ -38,5 +38,6 @@ async def generate_podcast(script, output_path="podcast.mp3", bg_music_path=None
 
     for file in segment_files:
         os.remove(file)
+    print("output_path: ",output_path)
 
     return output_path
